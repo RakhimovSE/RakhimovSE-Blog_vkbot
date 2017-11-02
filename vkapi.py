@@ -9,7 +9,7 @@ cfg.read(BOT_DIR + '/config.ini')
 
 token = cfg.get('BOT', 'token')
 secret = cfg.get('BOT', 'secret')
-confirmation_token = cfg.get('BOT', 'confirmation')
+confirmation = cfg.get('BOT', 'confirmation')
 
 session = vk.Session()
 api = vk.API(session, v=5.0)
@@ -17,3 +17,11 @@ api = vk.API(session, v=5.0)
 
 def send_message(user_id, message, attachment):
     api.messages.send(access_token=token, user_id=user_id, message=message, attachment=attachment)
+
+
+def get_user_name(user_id):
+    data = api.users.get(user_ids=user_id)
+    if 'response' not in data:
+        return '', ''
+    user = data['response'][0]
+    return user['first_name'], user['last_name']

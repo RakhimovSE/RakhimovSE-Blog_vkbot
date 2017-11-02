@@ -12,8 +12,9 @@ def load_modules():
         importlib.import_module("commands." + m[0:-3])
 
 
-def get_answer(body):
-    message = 'Прости, не понимаю тебя. Напиши \'помощь\', чтобы узнать мои команды'
+def get_answer(data):
+    body = data['body'].lower()
+    message = 'Прости, не понимаю тебя. Напиши "помощь", чтобы узнать мои команды'
     attachment = ''
     distance = len(body)
     command = None
@@ -26,10 +27,10 @@ def get_answer(body):
                 command = c
                 key = k
                 if distance == 0:
-                    message, attachment = c.process()
+                    message, attachment = c.process(data)
                     return message, attachment
     if float(distance) < len(body) * 0.4:
-        message, attachment = command.process()
+        message, attachment = command.process(data)
         message = 'Я понял ваш запрос как "%s"\n\n' % key + message
     return message, attachment
 
@@ -37,7 +38,7 @@ def get_answer(body):
 def create_answer(data):
     load_modules()
     user_id = data['user_id']
-    message, attachment = get_answer(data['body'].lower())
+    message, attachment = get_answer(data)
     vkapi.send_message(user_id, message, attachment)
 
 

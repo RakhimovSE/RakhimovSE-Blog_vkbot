@@ -1,9 +1,8 @@
 from flask import Flask, request, json
-# from settings import *
 import messageHandler
-import os
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def main():
@@ -16,7 +15,9 @@ def processing():
     if 'type' not in data.keys():
         return 'not vk'
     if data['type'] == 'confirmation':
-        return messageHandler.vkapi.confirmation_token
-    elif data['type'] == 'message_new':
+        return messageHandler.vkapi.confirmation
+    if 'secret' in data and data['secret'] != messageHandler.vkapi.secret:
+        return 'wrong secret code'
+    if data['type'] == 'message_new':
         messageHandler.create_answer(data['object'])
     return 'ok'
