@@ -1,9 +1,9 @@
 from flask import Flask, request, json
 # from settings import *
 import messageHandler
+import os
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def main():

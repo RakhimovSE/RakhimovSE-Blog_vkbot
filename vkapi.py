@@ -1,8 +1,11 @@
 import vk
+import os
 from configparser import ConfigParser
 
+BOT_DIR = os.path.dirname(os.path.realpath(__file__))
+
 cfg = ConfigParser()
-cfg.read('config.ini')
+cfg.read(BOT_DIR + '/config.ini')
 
 token = cfg.get('BOT', 'token')
 secret = cfg.get('BOT', 'secret')

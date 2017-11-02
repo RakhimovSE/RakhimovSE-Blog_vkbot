@@ -6,14 +6,14 @@ from command_system import command_list
 
 def load_modules():
     # путь от рабочей директории, ее можно изменить в настройках приложения
-    files = os.listdir("/home/dckitzng/vkbot_test/commands")
+    files = os.listdir(vkapi.BOT_DIR + '/commands')
     modules = filter(lambda x: x.endswith('.py'), files)
     for m in modules:
         importlib.import_module("commands." + m[0:-3])
 
 
 def get_answer(body):
-    message = "Прости, не понимаю тебя. Напиши 'помощь', чтобы узнать мои команды"
+    message = 'Прости, не понимаю тебя. Напиши \'помощь\', чтобы узнать мои команды'
     attachment = ''
     distance = len(body)
     command = None
