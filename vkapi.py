@@ -12,16 +12,17 @@ secret = cfg.get('BOT', 'secret')
 confirmation = cfg.get('BOT', 'confirmation')
 
 session = vk.Session()
-api = vk.API(session, v=5.0)
+api = vk.API(session, v=5.71, lang='ru')
 
 
-def send_message(user_id, message, attachment):
+def send_message(user_id, message, attachment = ''):
     api.messages.send(access_token=token, user_id=user_id, message=message, attachment=attachment)
 
 
 def get_user_name(user_id):
-    data = api.users.get(user_ids=user_id)
-    if 'response' not in data:
+    try:
+        data = api.users.get(user_ids=user_id)
+        user = data[0]
+        return user['first_name'], user['last_name']
+    except:
         return '', ''
-    user = data['response'][0]
-    return user['first_name'], user['last_name']

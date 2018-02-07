@@ -4,7 +4,8 @@ import command_system
 
 def hello(data):
     first_name, last_name = vkapi.get_user_name(data['user_id'])
-    message = 'Привет, %s %s!\nЯ новый чат-бот.' % (first_name, last_name)
+    message = 'Привет, %s %s!\nЯ - личный помощник Севастьяна Рахимова. Ты можешь задать интересующий тебя вопрос, ' \
+              'а я передам его Севастьяну 😊' % (first_name, last_name)
     return message, ''
 
 
